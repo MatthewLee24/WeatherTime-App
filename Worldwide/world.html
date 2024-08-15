@@ -242,6 +242,7 @@
         }
 }
     function updateClock() {
+        let currentTime = new Date();
         let city = document.getElementById("city").value;
         let offset = 0;
 
@@ -252,7 +253,6 @@
             }
        
             //ChatGPT formula : UTC Time to global Time
-            let currentTime = new Date();
             let totalMinutes = currentTime.getUTCHours() * 60 + currentTime.getUTCMinutes() + (offset * 60);
             let hours = Math.floor(totalMinutes / 60);
             let minutes = Math.floor(totalMinutes % 60);
