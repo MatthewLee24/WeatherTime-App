@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worldwide Weather and Clock</title>
+    <link rel="stylesheet" href="worldwide1.css">
+</head>
+<body>
+    <div class="card">
+        <div class="search">
+        </div>
+        <div class="weather">
+            <img src="images/rain.png" class="weather-icon" alt="Weather Icon">
+            <h1 class="temp">0˚c</h1>
+            <h2 class="city">Enter City Name</h2>
+            <div class="details">
+                <div class="col">
+                    <img src="images/humidity.png" alt="Humidity Icon">
+                    <div>
+                        <p class="humidity">50%</p>
+                        <p>Humidity</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="images/wind.png" alt="Wind Speed Icon">
+                    <div>
+                        <p class="wind">15 km/h</p>
+                        <p>Wind Speed</p>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+    <div class="hero">
+        <div class="container">
+            <div class="clock">
+                <span id="hrs">00</span>
+                <span>:</span>
+                <span id="min">00</span>
+                <span>:</span>
+                <span id="sec">00</span>
+                <span id="ampm">AM</span>
+                <div class="select-container">
+                    <select id="country">
+                        <option value="">Select Country</option>
+                        <option value="Iceland">Iceland (UTC+0)</option>
+                        <option value="Belgium">Belgium (UTC+1)</option>
+                        <option value="France">France (UTC+1)</option>
+                        <option value="Germany">Germany (UTC+1)</option>
+                        <option value="Italy">Italy (UTC+1)</option>
+                        <option value="Netherlands">Netherlands (UTC+1)</option>
+                        <option value="Spain">Spain (UTC+1)</option>
+                        <option value="Poland">Poland (UTC+1)</option>
+                        <option value="Sweden">Sweden (UTC+1)</option>
+                        <option value="Hungary">Hungary (UTC+1)</option>
+                        <option value="Norway">Norway (UTC+1)</option>
+                        <option value="Switzerland">Switzerland (UTC+1)</option>
+                        <option value="Greece">Greece (UTC+2)</option>
+                        <option value="Libya">Libya (UTC+2)</option>
+                        <option value="Malawi">Malawi (UTC+2)</option>
+                        <option value="Mozambique">Mozambique (UTC+2)</option>
+                        <option value="Rwanda">Rwanda (UTC+2)</option>
+                        <option value="South Africa">South Africa (UTC+2)</option>
+                        <option value="Sudan">Sudan (UTC+2)</option>
+                        <option value="Zambia">Zambia (UTC+2)</option>
+                        <option value="Zimbabwe">Zimbabwe (UTC+2)</option>
+                        <option value="Comoros">Comoros (UTC+3)</option>
+                        <option value="Djibouti">Djibouti (UTC+3)</option>
+                        <option value="Eritrea">Eritrea (UTC+3)</option>
+                        <option value="Ethiopia">Ethiopia (UTC+3)</option>
+                        <option value="Kenya">Kenya (UTC+3)</option>
+                        <option value="Madagascar">Madagascar (UTC+3)</option>
+                        <option value="Somalia">Somalia (UTC+3)</option>
+                        <option value="South Sudan">South Sudan (UTC+3)</option>
+                        <option value="Tanzania">Tanzania (UTC+3)</option>
+                        <option value="Mauritius">Mauritius (UTC+4)</option>
+                        <option value="Seychelles">Seychelles (UTC+4)</option>
+                        <option value="Qatar">Qatar (UTC+4)</option>
+                        <option value="United Arab Emirates">United Arab Emirates (UTC+4)</option>
+                        <option value="Afghanistan">Afghanistan (UTC+4:30)</option>
+                        <option value="Pakistan">Pakistan (UTC+5)</option>
+                        <option value="India">India (UTC+5:30)</option>
+                        <option value="Nepal">Nepal (UTC+5:45)</option>
+                        <option value="Bangladesh">Bangladesh (UTC+6)</option>
+                        <option value="Vietnam">Vietnam (UTC+7)</option>
+                        <option value="China">China (UTC+8)</option>
+                        <option value="Hong Kong">Hong Kong (UTC+8)</option>
+                        <option value="Malaysia">Malaysia (UTC+8)</option>
+                        <option value="Japan">Japan (UTC+9)</option>
+                        <option value="Korea">Korea (UTC+9)</option>
+                        <option value="Australia">Australia (UTC+10)</option>
+                        <option value="Papua New Guinea">Papua New Guinea (UTC+10)</option>
+                        <option value="New Caledonia">New Caledonia (UTC+11)</option>
+                        <option value="Solomon Islands">Solomon Islands (UTC+11)</option>
+                        <option value="Fiji">Fiji (UTC+12)</option>
+                        <option value="New Zealand">New Zealand (UTC+12)</option>
+                        <option value="Tuvalu">Tuvalu (UTC+12)</option>
+                        <option value="Canada">Canada (UTC-5)</option>
+                        <option value="Mexico">Mexico (UTC-6)</option>
+                        <option value="United States">United States (UTC-5)</option>
+                        <option value="Bermuda">Bermuda (UTC-4)</option>
+                        <option value="Argentina">Argentina (UTC-3)</option>
+                        <option value="Bolivia">Bolivia (UTC-4)</option>
+                        <option value="Brazil">Brazil (UTC-3)</option>
+                        <option value="Chile">Chile (UTC-4)</option>
+                        <option value="Colombia">Colombia (UTC-5)</option>
+                        <option value="Ecuador">Ecuador (UTC-5)</option>
+                        <option value="Paraguay">Paraguay (UTC-4)</option>
+                        <option value="Peru">Peru (UTC-5)</option>
+                        <option value="Uruguay">Uruguay (UTC-3)</option>
+                        <option value="Venezuela">Venezuela (UTC-4)</option>
+                    </select>
+                    <select class="city" id="city">
+                        <option value="">Select City</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const apiKey = "d014fae67d1b02aae2cad8600d8f9fcd";
+        const apiUrl = "https://api.openweathermap.org/data/2.5/weather?&units=metric&q=";
+
+        const timeZoneCities = {
+    "Iceland": { "Reykjavik": "+0" },
+    "Belgium": { "Brussels": "+1" },
+    "France": { "Paris": "+1" },
+    "Germany": { "Berlin": "+1" },
+    "Italy": { "Rome": "+1" },
+    "Netherlands": { "Amsterdam": "+1" },
+    "Spain": { "Madrid": "+1" },
+    "Poland": { "Warsaw": "+1" },
+    "Sweden": { "Stockholm": "+1" },
+    "Hungary": { "Budapest": "+1" },
+    "Norway": { "Oslo": "+1" },
+    "Switzerland": { "Zurich": "+1" },
+    "Greece": { "Athens": "+2" },
+    "Libya": { "Tripoli": "+2" },
+    "Malawi": { "Lilongwe": "+2" },
+    "Mozambique": { "Maputo": "+2" },
+    "Rwanda": { "Kigali": "+2" },
+    "South Africa": { "Pretoria": "+2" },
+    "Sudan": { "Khartoum": "+2" },
+    "Zambia": { "Lusaka": "+2" },
+    "Zimbabwe": { "Harare": "+2" },
+    "Comoros": { "Moroni": "+3" },
+    "Djibouti": { "Djibouti": "+3" },
+    "Eritrea": { "Asmara": "+3" },
+    "Ethiopia": { "Addis Ababa": "+3" },
+    "Kenya": { "Nairobi": "+3" },
+    "Madagascar": { "Antananarivo": "+3" },
+    "Somalia": { "Mogadishu": "+3" },
+    "South Sudan": { "Juba": "+3" },
+    "Tanzania": { "Dar es Salaam": "+3" },
+    "Mauritius": { "Port Louis": "+4" },
+    "Seychelles": { "Victoria": "+4" },
+    "Qatar": { "Doha": "+4" },
+    "United Arab Emirates": { "Abu Dhabi": "+4" },
+    "Afghanistan": { "Kabul": "+4.5" },
+    "Pakistan": { "Karachi": "+5" },
+    "India": { "New Delhi": "+5.5" },
+    "Nepal": { "Kathmandu": "+5.75" },
+    "Bangladesh": { "Dhaka": "+6" },
+    "Vietnam": { "Hanoi": "+7" },
+    "China": { "Beijing": "+8" },
+    "Hong Kong": { "Hong Kong": "+8" },
+    "Malaysia": { "Kuala Lumpur": "+8" },
+    "Japan": { "Tokyo": "+9" },
+    "Korea": { "Seoul": "+9" },
+    "Australia": { "Sydney": "+10" },
+    "Papua New Guinea": { "Port Moresby": "+10" },
+    "New Caledonia": { "Noumea": "+11" },
+    "Solomon Islands": { "Honiara": "+11" },
+    "Fiji": { "Suva": "+12" },
+    "New Zealand": { "Wellington": "+12" },
+    "Tuvalu": { "Funafuti": "+12" },
+    "Canada": { "Toronto": "-5" },
+    "Mexico": { "Mexico City": "-6" },
+    "United States": { "New York": "-5" },
+    "Bermuda": { "Hamilton": "-4" },
+    "Argentina": { "Buenos Aires": "-3" },
+    "Bolivia": { "La Paz": "-4" },
+    "Brazil": { "Rio de Janeiro": "-3" },
+    "Chile": { "Santiago": "-4" },
+    "Colombia": { "Bogota": "-5" },
+    "Ecuador": { "Quito": "-5" },
+    "Paraguay": { "Asuncion": "-4" },
+    "Peru": { "Lima": "-5" },
+    "Uruguay": { "Montevideo": "-3" },
+    "Venezuela": { "Caracas": "-4" }
+    
+};
+
+        async function checkWeather(city) {
+            const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+            if (response.status === 404) {
+                document.querySelector(".weather").style.display = "none";
+            } else {
+                const data = await response.json();
+                document.querySelector(".city").innerHTML = data.name;
+                document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "˚c";
+                document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+                document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
+                const weatherIcon = document.querySelector(".weather-icon");
+                switch (data.weather[0].main) {
+                    case "Clouds":
+                        weatherIcon.src = "images/clouds.png";
+                        break;
+                    case "Clear":
+                        weatherIcon.src = "images/clear.png";
+                        break;
+                    case "Rain":
+                        weatherIcon.src = "images/rain.png";
+                        break;
+                    case "Drizzle":
+                        weatherIcon.src = "images/drizzle.png";
+                        break;
+                    case "Mist":
+                        weatherIcon.src = "images/mist.png";
+                        break;
+                    default:
+                        weatherIcon.src = "images/clear.png";
+                }
+                document.querySelector(".weather").style.display = "block";
+            }
+        }
+
+        function updateCityDropdown() {
+            const country = document.getElementById("country").value;
+            const cityDropdown = document.getElementById("city");
+            cityDropdown.innerHTML = '<option value="">Select City</option>';
+    
+        if (timeZoneCities[country]) {
+            Object.keys(timeZoneCities[country]).forEach(city => {
+                const option = document.createElement("option");
+                option.value = city;
+                option.text = city;
+                cityDropdown.add(option);
+            });
+        }
+}
+    function updateClock() {
+        let currentTime = new Date();
+        let city = document.getElementById("city").value;
+        let offset = 0;
+
+        if (city) {
+            let country = document.getElementById("country").value;
+            if (timeZoneCities[country] && timeZoneCities[country][city]) {
+                offset = parseFloat(timeZoneCities[country][city]);
+            }
+        }
+        else{
+            document.getElementById("hrs").textContent = "00";
+            document.getElementById("min").textContent = "00";
+            document.getElementById("sec").textContent = "00";
+            document.getElementById("ampm").textContent = "AM";
+        }
+            //ChatGPT formula : UTC Time to global Time
+            let totalMinutes = currentTime.getUTCHours() * 60 + currentTime.getUTCMinutes() + (offset * 60);
+            let hours = Math.floor(totalMinutes / 60);
+            let minutes = Math.floor(totalMinutes % 60);
+            let seconds = currentTime.getUTCSeconds();
+        
+            let period = "AM";
+            if (hours >= 12) {
+                period = "PM";
+            }
+            if (hours > 12){
+                hours -= 12;
+            } 
+            else if (hours === 0){
+                hours = 12;
+            }
+
+            document.getElementById("hrs").innerHTML = (hours < 10 ? "0" : "") + hours;
+            document.getElementById("min").innerHTML = (minutes < 10 ? "0" : "") + minutes;
+            document.getElementById("sec").innerHTML = (seconds < 10 ? "0" : "") + seconds;
+            document.getElementById("ampm").innerHTML = period;
+        }
+
+        document.getElementById("country").addEventListener('change', () => {
+            updateCityDropdown();
+            updateClock();
+        });
+
+        document.getElementById("city").addEventListener('change', (event) => {
+            const city = event.target.value;
+            if (city) {
+                checkWeather(city);
+            }
+        });
+        
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
