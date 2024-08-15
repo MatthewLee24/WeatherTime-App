@@ -242,7 +242,6 @@
         }
 }
     function updateClock() {
-        let currentTime = new Date();
         let city = document.getElementById("city").value;
         let offset = 0;
 
@@ -251,14 +250,9 @@
             if (timeZoneCities[country] && timeZoneCities[country][city]) {
                 offset = parseFloat(timeZoneCities[country][city]);
             }
-        }
-        else{
-            document.getElementById("hrs").textContent = "00";
-            document.getElementById("min").textContent = "00";
-            document.getElementById("sec").textContent = "00";
-            document.getElementById("ampm").textContent = "AM";
-        }
+       
             //ChatGPT formula : UTC Time to global Time
+            let currentTime = new Date();
             let totalMinutes = currentTime.getUTCHours() * 60 + currentTime.getUTCMinutes() + (offset * 60);
             let hours = Math.floor(totalMinutes / 60);
             let minutes = Math.floor(totalMinutes % 60);
@@ -280,6 +274,14 @@
             document.getElementById("sec").innerHTML = (seconds < 10 ? "0" : "") + seconds;
             document.getElementById("ampm").innerHTML = period;
         }
+        else{
+            document.getElementById("hrs").textContent = "00";
+            document.getElementById("min").textContent = "00";
+            document.getElementById("sec").textContent = "00";
+            document.getElementById("ampm").textContent = "AM";
+        }
+}
+        
 
         document.getElementById("country").addEventListener('change', () => {
             updateCityDropdown();
